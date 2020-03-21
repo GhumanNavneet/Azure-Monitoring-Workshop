@@ -32,14 +32,14 @@ I highly recommend your students make sure they have an Azure Subscription they 
 4. Visual Studio has view called **SQL Server Object Explorer** that can be used to add and delete SQL databases on the SQL server.<br/>
    <img src="images/sql.jpg"/><br/>
 5. Add SQL Server from **SQL Server Object Explorer**<br/>
-   <img src="images/sqlserver.jpg"/><br/>
+   <img src="images/sqlsrv1.jpg"/><br/>
 Note: Use SQL Auth with the username being sqladmin and password being whatever you used during deployment<br/>
 6. Connect to the database server VM (xxxxxSqlSrv16) make sure to use below username and password to connect your SQL Server Virtual Manchine:
 • Username: **sqladmin**<br/>
 • Password: **demo@pass123**<br/>
    <img src="images/sqlconnect.jpg"/><br/>
 7. Once connected create a new database called **tpcc**<br/>
-   <img src="images/sqlserver1.jpg"/><br/>
+   <img src="images/sqlsrv.jpg"/><br/>
 8. From the ARM template, send the below guest OS metric to Azure Monitor for the SQL Server<br/>
 9. Add a Performance Counter Metric for:<br/>
 •	Object: SQLServer:Databases<br/>
@@ -48,18 +48,21 @@ Note: Use SQL Auth with the username being sqladmin and password being whatever 
 ``
 Hint: https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/metrics-store-custom-guestos-resource-manager-vm<br/>
 ``
-10.	First, figure out the correct format for the counter use the run command on the SQL Server in the Azure portal and run<br/>
+10. First, figure out the correct format for the counter use the run command on the SQL Server in the Azure portal and run<br/>
 **Run the command**<br/>
 `
 (Get-Counter -ListSet SQLServer:Databases).Paths
 `
+   <img src="images/sqlvm.jpg"/><br/>
+
 11. Once its finished, review the results (scroll up) and copy the output for the SQLServer:Databases counter.<br/>
- 
 \SQLServer:Databases(*)\Active Transactions
 Then change it to target just your specific database
 \SQLServer:Databases(tpcc)\Active Transactions
+``
 Tip: Share the following link to help lead them to how to find the counter
 https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-counter?view=powershell-5.1
+``
 Next, once you have the counter you need to modify the ARM template for the SQL Server to add the collection of this counter that sends it to Azure Monitor using the Azure monitor data sink
 Add this JSON to the SQL Server code
 Verify the identity is present in the template (add it if its missing)
