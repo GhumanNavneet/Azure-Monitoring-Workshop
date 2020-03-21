@@ -1,4 +1,4 @@
-# Ready Pre-day Azure Monitoring Workshop Proctor Guide
+# Azure Monitoring Workshop
 
    <img src="images/architecture.jpg"/><br/>
 
